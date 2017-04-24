@@ -23,5 +23,10 @@ require('mahrio').runServer( process.env, __dirname ).then( function( server ) {
 
   });
 
+  var state = false;
+  setInterval( function(){
+    io.sockets.emit('event:led:state', state = !state );
+  }, 1000);
+
   console.log('Server Ready');
 });
