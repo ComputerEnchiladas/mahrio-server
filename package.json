@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "mahrio": "^1.0.0",
+    "socket.io": "^1.7.3"
+  }
+}
