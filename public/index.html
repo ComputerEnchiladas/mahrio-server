@@ -3,11 +3,26 @@ body{ margin: 0; padding: 0; background: #D64043; }
 </style>
 
 <body>
-<h1>Web View (static HTML)</h1>
+<button onclick="sweep('X');">SweepX</button>
+<button onclick="sweep('Y');">SweepY</button>
+<br/>
+<button onclick="sweep('0');">SweepSTOP</button>
+<button onclick="sweep('XY');">SweepBOTH</button>
+<button onclick="sweep('--');">Center</button>
+<button onclick="sweep('__');">GO TO</button><br/>
+<input type="range" id="x" value="90" min="60" max="120" /><br/>
+<input type="range" id="y" value="90" min="60" max="120" />
 </body>
 
 <script src="https://cdn.socket.io/socket.io-1.7.3.js"></script>
 <script type="text/javascript">
 var socket = io();
 socket.on('event:hello', function(){ console.log('Hello from Server'); });
+var sweep = function ( cmd ){
+  if( cmd == "__" ) {
+    socket.emit( 'cam:'+cmd, {x: document.getElementById('x').value, y: document.getElementById('y').value } );
+  } else {
+    socket.emit( 'cam:'+cmd );
+  }
+}
 </script>
