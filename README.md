@@ -13,6 +13,12 @@ host machine uses to connect to the internet. If this line is commented it defau
 
 Inside this folder you will find the Ionic mobile app.
 
+### cordova bluetooth
+
+The branch ionic-hm-10 contains an ionic app which depends on cordova-plugin-ble-central (https://github.com/don/cordova-plugin-ble-central). This plugin has to be installed in (e.g. `cordova plugin add cordova-plugin-ble-central --variable BLUETOOTH_USAGE_DESCRIPTION="Your description here"` within mobile folder. Once app is installed, you can upload to ionic view. To test you will need to upload code from arduino/hm10test/hm10test.ino into an Arduino microcontroller. Then you may shutdown device to install bluetooth module (HM-10) and the power up Arduino. In the mobile you can locate the bluetooth module by going to bluetooth tab and pulling down to refresh (scan) for devices. When yoou find HMSoft, click on it and you will see its info. Under the info are two buttons, one to toggle built-in LED 13 on and off. The other is to blink LED.
+
+Right now the baud rate is 9600 for bluetooth which is a bit slow. Trying to figure out how to raise it to 112500 for significant performance improvement.
+
 ### mobile/www/index.html
 
 This is the entry into Ionic. Here we include other dependencies such as scripts, styles, and ionic. This file also contains
