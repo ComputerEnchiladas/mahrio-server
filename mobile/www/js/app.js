@@ -20,6 +20,18 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
       // org.apache.cordova.statusbar required
       StatusBar.styleDefault();
     }
+
+
+    ble.isEnabled(
+        function() {
+            console.log("Bluetooth is enabled");
+        },
+        function() {
+            console.log("Bluetooth is *not* enabled");
+            alert("Bluetooth is *not* enabled");
+        }
+    );
+
   });
 })
 
@@ -68,6 +80,26 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
         }
       }
     })
+
+  .state('tab.ble', {
+      url: '/ble',
+      views: {
+        'tab-ble': {
+          templateUrl: 'templates/tab-ble.html',
+          controller: 'BLECtrl'
+        }
+      }
+    })
+    .state('tab.ble-detail', {
+      url: '/ble/:deviceId',
+      views: {
+        'tab-ble': {
+          templateUrl: 'templates/ble-detail.html',
+          controller: 'BLEDetailCtrl'
+        }
+      }
+  })
+  
 
   .state('tab.account', {
     url: '/account',

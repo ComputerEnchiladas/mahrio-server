@@ -28,6 +28,75 @@ angular.module('starter.controllers', [])
   $scope.chat = Chats.get($stateParams.chatId);
 })
 
+
+.controller('BLECtrl', function($scope, BLE) {
+
+  // keep a reference since devices will be added
+  $scope.devices = BLE.devices;
+
+  var success = function () {
+      if ($scope.devices.length < 1) {
+          // a better solution would be to update a status message rather than an alert
+          alert("Didn't find any Bluetooth Low Energy devices.");
+      }
+  };
+
+  var failure = function (error) {
+      alert(error);
+  };
+
+  // pull to refresh
+  $scope.onRefresh = function() {
+      BLE.scan().then(
+          success, failure
+      ).finally(
+          function() {
+              $scope.$broadcast('scroll.refreshComplete');
+          }
+      )
+  }
+
+  // initial scan
+  BLE.scan().then(success, failure);
+
+})
+
+.controller('BLEDetailCtrl', function($scope, $stateParams, BLE) {
+  // ASCII only
+  var stringToBytes = function (string) {
+    var array = new Uint8Array(string.length);
+    for (var i = 0, l = string.length; i < l; i++) {
+      array[i] = string.charCodeAt(i);
+    }
+    return array.buffer;
+  };
+
+  BLE.connect($stateParams.deviceId).then(
+      function(peripheral) {
+          $scope.device = peripheral;
+      }
+  );
+  $scope.state = false;
+  $scope.toggle = function(){
+    $scope.state = !$scope.state;
+    var data = stringToBytes($scope.state ? 'ON':'OFF');
+    ble.writeWithoutResponse($scope.device.id, 'ffe0', 'ffe1', data, function(){
+      console.log('success');
+    }, function(){
+      console.log('failure');
+    });
+  };
+  $scope.blink = function(){
+    var data = stringToBytes('BLINK');
+    ble.writeWithoutResponse($scope.device.id, 'ffe0', 'ffe1', data, function(){
+      console.log('success');
+    }, function(){
+      console.log('failure');
+    });
+  };
+})
+
+
 .controller('AccountCtrl', function($scope) {
   $scope.settings = {
     enableFriends: true
