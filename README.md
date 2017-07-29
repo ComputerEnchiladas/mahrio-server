@@ -16,12 +16,12 @@ Inside this folder you will find the Ionic mobile app.
 ### mobile/www/index.html
 
 This is the entry into Ionic. Here we include other dependencies such as scripts, styles, and ionic. This file also contains
-the connection to the server via sockets. `var socket = io('<ip-address-of-server>');`
+the connection to the server via sockets. `var socket = io('http://<ip-address-of-server>:<port>');`
 
 ## Run Locally
 
 * clone this repo (`git clone https://github.com/ComputerEnchiladas/mahrio-server.git`)
-* update server.js with your IP address or comment out to use localhost
-* update mobile/www/index.html with the server's IP address
+* update `server.js` with your IP address or comment out to use localhost
+* update `mobile/www/index.html` with the server's IP address `var socket = io('http://<ip-address-of-server>:<port>');`
 * run node server (`node server.js`) 
 * go to mobile folder, then run mobile app (`ionic serve`)
